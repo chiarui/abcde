@@ -480,22 +480,23 @@
 
         function onPlayerReady(event) {
             event.target.playVideo();
-            // 在 PC 端，靜音 Autoplay 通常是允許的
         }
 
         function onPlayerStateChange(event) {
-            // 修正問題 1：當播放器狀態變為 PLAYING 時才顯示 UI
+            // 當影片真正開始播放（PLAYING），顯示 UI 並確保狀態同步
             if (event.data === YT.PlayerState.PLAYING) {
                 document.getElementById('audio-ui').classList.add('visible');
+                
+                // 檢查播放器目前的靜音狀態來更新 UI (防止 UI 與實際聲音不同步)
+                isMuted = player.isMuted();
+                updateVolumeUI();
             }
             if (event.data === YT.PlayerState.ENDED) {
                 player.playVideo();
             }
         }
 
-        // 修正問題 2：增強 PC 端的互動監聽
         const interactionEvents = ['mousedown', 'keydown', 'touchstart', 'wheel', 'click'];
-        
         interactionEvents.forEach(eventType => {
             window.addEventListener(eventType, handleUserInteraction, { once: true, passive: true });
         });
@@ -504,22 +505,11 @@
             if (!interactionDone && player && typeof player.unMute === 'function') {
                 try {
                     player.unMute();
-                    player.setVolume(50);
-                    const playPromise = player.playVideo();
+                    player.setVolume(25);
+                    player.playVideo();
                     
-                    // 某些瀏覽器可能返回 Promise
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            isMuted = false;
-                            updateVolumeUI();
-                        }).catch(e => {
-                            console.log("Playback failed:", e);
-                        });
-                    } else {
-                        // 傳統方式
-                        isMuted = false;
-                        updateVolumeUI();
-                    }
+                    isMuted = false;
+                    updateVolumeUI();
                     
                     interactionDone = true;
                 } catch (err) {
