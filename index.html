@@ -148,7 +148,7 @@
         <div id="youtube-player"></div>
     </div>
 
-    <!-- 音樂控制 UI (預設隱藏) -->
+    <!-- 音樂控制 UI -->
     <div id="audio-ui" class="fixed bottom-6 right-6 z-[100]">
         <button id="mute-toggle" onclick="toggleMuteManual(event)" class="music-disc rounded-full shadow-2xl text-[#d4a373] focus:outline-none">
             <svg id="icon-volume-high" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 24 24">
@@ -451,7 +451,7 @@
                 videoId: videoID,
                 playerVars: {
                     'autoplay': 1,
-                    'mute': 0,
+                    'mute': 1, // 預設靜音以符合瀏覽器政策
                     'controls': 0,
                     'loop': 1,
                     'playlist': videoID,
@@ -466,51 +466,63 @@
         }
 
         function onPlayerReady(event) {
+            // 預先載入，確保準備好播放
             event.target.playVideo();
             updateVolumeUI();
         }
 
         function onPlayerStateChange(event) {
-            // 當影片真正開始播放（PLAYING），顯示 UI 並確保狀態同步
             if (event.data === YT.PlayerState.PLAYING) {
-                // 檢查播放器目前的靜音狀態來更新 UI (防止 UI 與實際聲音不同步)
+                // 確保 UI 狀態與播放器同步
                 isMuted = player.isMuted();
                 updateVolumeUI();
             }
             if (event.data === YT.PlayerState.ENDED) {
                 player.playVideo();
-                updateVolumeUI();
             }
         }
 
-        const interactionEvents = ['mousedown', 'keydown', 'touchstart', 'wheel', 'click'];
+        // 偵測所有可能的使用者互動來啟動音訊
+        const interactionEvents = ['mousedown', 'keydown', 'touchstart', 'wheel', 'scroll'];
         interactionEvents.forEach(eventType => {
             window.addEventListener(eventType, handleUserInteraction, { once: true, passive: true });
         });
 
-        function handleUserInteraction() {
+        function handleUserInteraction(e) {
+            // 如果是點擊了靜音按鈕本身，由 toggleMuteManual 處理，不執行此處全域啟動邏輯
+            if (e && e.target && e.target.closest('#mute-toggle')) return;
+
             if (!interactionDone && player && typeof player.unMute === 'function') {
-                try {
-                    player.unMute();
-                    player.setVolume(25);
-                    player.playVideo();
-                    
-                    isMuted = false;
-                    updateVolumeUI();
-                    
-                    interactionDone = true;
-                } catch (err) {
-                    console.log("Interaction play error:", err);
-                }
+                activateAudio();
+            }
+        }
+
+        function activateAudio() {
+            try {
+                player.unMute();
+                player.setVolume(25);
+                player.playVideo();
+                isMuted = false;
+                updateVolumeUI();
+                interactionDone = true;
+            } catch (err) {
+                console.log("Audio activation error:", err);
             }
         }
 
         function toggleMuteManual(event) {
-            if (event) event.stopPropagation();
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
             if (!player) return;
             
+            // 如果是第一次互動就點擊按鈕，直接標記互動已完成
+            interactionDone = true;
+
             if (isMuted) {
                 player.unMute();
+                player.setVolume(25);
                 player.playVideo();
                 isMuted = false;
             } else {
@@ -525,14 +537,14 @@
             const mutedIcon = document.getElementById('icon-volume-muted');
             const toggleBtn = document.getElementById('mute-toggle');
 
+            if (!highIcon || !mutedIcon || !toggleBtn) return;
+
             if (isMuted) {
                 highIcon.classList.add('hidden');
                 mutedIcon.classList.remove('hidden');
-                toggleBtn.classList.remove('playing');
             } else {
                 highIcon.classList.remove('hidden');
                 mutedIcon.classList.add('hidden');
-                toggleBtn.classList.add('playing');
             }
         }
 
@@ -546,10 +558,15 @@
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById(`${prefix}-days`).innerText = Math.max(0, d).toString().padStart(2, '0');
-            document.getElementById(`${prefix}-hours`).innerText = Math.max(0, h).toString().padStart(2, '0');
-            document.getElementById(`${prefix}-mins`).innerText = Math.max(0, m).toString().padStart(2, '0');
-            document.getElementById(`${prefix}-secs`).innerText = Math.max(0, s).toString().padStart(2, '0');
+            const dEl = document.getElementById(`${prefix}-days`);
+            const hEl = document.getElementById(`${prefix}-hours`);
+            const mEl = document.getElementById(`${prefix}-mins`);
+            const sEl = document.getElementById(`${prefix}-secs`);
+
+            if(dEl) dEl.innerText = Math.max(0, d).toString().padStart(2, '0');
+            if(hEl) hEl.innerText = Math.max(0, h).toString().padStart(2, '0');
+            if(mEl) mEl.innerText = Math.max(0, m).toString().padStart(2, '0');
+            if(sEl) sEl.innerText = Math.max(0, s).toString().padStart(2, '0');
         }
 
         const khDate = new Date("Oct 3, 2026 12:00:00").getTime();
