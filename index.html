@@ -483,7 +483,7 @@
         }
 
         // 偵測所有可能的使用者互動來啟動音訊
-        const interactionEvents = ['mousedown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+        const interactionEvents = ['mousedown', 'keydown', 'touchstart', 'wheel', 'click'];
         interactionEvents.forEach(eventType => {
             window.addEventListener(eventType, handleUserInteraction, { once: true, passive: true });
         });
