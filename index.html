@@ -141,7 +141,7 @@
         }
     </style>
 </head>
-<body onclick="handleUserInteraction()" ontouchstart="handleUserInteraction()">
+<body onclick="handleUserInteraction()" onscroll="handleUserInteraction()" ontouchstart="handleUserInteraction()">
 
     <!-- 隱藏播放器容器 -->
     <div id="yt-player-container">
@@ -478,8 +478,11 @@
                 hasUnmuted = true;
                 isMuted = false;
                 updateVolumeUI();
+                window.removeEventListener('wheel', handleUserInteraction);
             }
         }
+
+        window.addEventListener('wheel', handleUserInteraction, { passive: true });
 
         // 3. 手動控制功能 (切換靜音並連動旋轉動畫)
         function toggleMuteManual(event) {
