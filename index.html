@@ -467,6 +467,7 @@
 
         function onPlayerReady(event) {
             event.target.playVideo();
+            updateVolumeUI();
         }
 
         function onPlayerStateChange(event) {
@@ -478,6 +479,7 @@
             }
             if (event.data === YT.PlayerState.ENDED) {
                 player.playVideo();
+                updateVolumeUI();
             }
         }
 
@@ -523,20 +525,14 @@
             const mutedIcon = document.getElementById('icon-volume-muted');
             const toggleBtn = document.getElementById('mute-toggle');
 
-            if (interactionDone) {
-                if (isMuted) {
-                    highIcon.classList.add('hidden');
-                    mutedIcon.classList.remove('hidden');
-                    toggleBtn.classList.remove('playing');
-                } else {
-                    highIcon.classList.remove('hidden');
-                    mutedIcon.classList.add('hidden');
-                    toggleBtn.classList.add('playing');
-                }
-            } else {
+            if (isMuted) {
                 highIcon.classList.add('hidden');
                 mutedIcon.classList.remove('hidden');
                 toggleBtn.classList.remove('playing');
+            } else {
+                highIcon.classList.remove('hidden');
+                mutedIcon.classList.add('hidden');
+                toggleBtn.classList.add('playing');
             }
         }
 
