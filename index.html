@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corgi & Julie's Wedding</title>
+    <!-- 字體設定 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #d4a373;
+            --secondary: #8da399;
+            --bg-warm: #fefae0;
+            --text-dark: #4a4e69;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #faf9f6;
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+
+        .font-en { font-family: 'Cormorant Garamond', serif; }
+
+        /* 毛玻璃導航列 */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 全螢幕封面 */
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://i.postimg.cc/fbQbmtdS/IMG-0434.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        /* 倒數計時卡片 */
+        .timer-card {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            min-width: 80px;
+            position: relative;
+        }
+
+        .timer-divider {
+            width: 1px;
+            height: 40px;
+            background: #d1d1d1;
+            margin: 0 15px;
+        }
+
+        /* 垂直 V-Card */
+        .v-card {
+            border-left: 3px solid var(--primary);
+            padding-left: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* 手機防斷行 */
+        .no-wrap {
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        /* 摺疊面板動畫 */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 客製化按鈕 */
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導覽列 -->
+    <nav class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+        <div class="font-en text-2xl font-medium tracking-widest text-[#d4a373]">C & J</div>
+        <div class="hidden md:flex space-x-8 text-sm tracking-widest">
+            <a href="#about" class="hover:text-[#d4a373]">關於我們 ABOUT</a>
+            <a href="#details" class="hover:text-[#d4a373]">婚禮詳情 DETAILS</a>
+            <a href="#rsvp" class="hover:text-[#d4a373]">出席回函 RSVP</a>
+        </div>
+        <div class="md:hidden text-xs text-[#d4a373] font-bold">2026.10.03</div>
+    </nav>
+
+    <!-- 封面 -->
+    <header class="hero-section">
+        <div class="animate-fadeIn">
+            <h2 class="font-en italic text-2xl mb-4 tracking-[0.2em]">Love Love Love</h2>
+            <h1 class="font-en text-6xl md:text-8xl mb-6">Corgi & Julie</h1>
+            <p class="text-lg tracking-[0.3em]">2026 . 10 . 03</p>
+        </div>
+    </header>
+
+    <!-- 關於我們 / 計時器 -->
+    <section id="about" class="py-24 px-6 max-w-4xl mx-auto text-center">
+        <h3 class="font-en text-4xl mb-12 text-[#8da399]">Counting Down</h3>
+        
+        <div class="flex flex-wrap justify-center items-center gap-4 mb-20">
+            <div class="timer-card">
+                <span id="days" class="block font-en text-4xl text-[#d4a373]">00</span>
+                <span class="text-[10px] text-gray-400 tracking-tighter">DAYS</span>
+            </div>
+            <div class="timer-divider hidden sm:block"></div>
+            <div class="timer-card">
+                <span id="hours" class="block font-en text-4xl text-[#d4a373]">00</span>
+                <span class="text-[10px] text-gray-400 tracking-tighter">HOURS</span>
+            </div>
+            <div class="timer-divider hidden sm:block"></div>
+            <div class="timer-card">
+                <span id="minutes" class="block font-en text-4xl text-[#d4a373]">00</span>
+                <span class="text-[10px] text-gray-400 tracking-tighter">MINS</span>
+            </div>
+            <div class="timer-divider hidden sm:block"></div>
+            <div class="timer-card">
+                <span id="seconds" class="block font-en text-4xl text-[#d4a373]">00</span>
+                <span class="text-[10px] text-gray-400 tracking-tighter">SECS</span>
+            </div>
+        </div>
+
+        <div class="v-card text-left max-w-lg mx-auto">
+            <h4 class="text-xl mb-4 font-bold">我們的故事 OUR STORY</h4>
+            <p class="leading-loose text-gray-600">
+                在溫暖的陽光下，我們決定攜手前行。<br>
+                在這個特別的日子，誠摯邀請您參與我們的幸福時刻。
+            </p>
+        </div>
+    </section>
+
+    <!-- 婚禮詳情 -->
+    <section id="details" class="py-24 bg-[#f4f1ea] px-6">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="font-en text-4xl text-center mb-16 text-[#8da399]">Wedding Details</h3>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div>
+                        <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHEN</p>
+                        <p class="text-lg">2026 年 10 月 03 日</p>
+                        <p class="text-sm text-gray-500">11:30 迎賓入席 | 12:00 正式開席</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHERE</p>
+                        <p class="text-lg">台北艾美酒店 翡翠廳</p>
+                        <p class="text-sm text-gray-500 no-wrap">台北市信義區松仁路38號</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">DRESS CODE</p>
+                        <p class="text-lg">淡色系色彩</p>
+                        <p class="text-sm text-gray-500">輕盈優雅的淺色調，與我們一同共享暖陽</p>
+                    </div>
+                </div>
+
+                <!-- 交通指引 摺疊面板 -->
+                <div class="space-y-4">
+                    <p class="text-xs text-[#d4a373] font-en tracking-widest mb-4">TRANSPORTATION</p>
+                    
+                    <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
+                        <div class="flex justify-between items-center py-2">
+                            <span class="font-bold">捷運資訊 MRT</span>
+                            <span class="accordion-icon">↓</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="py-4 text-sm text-gray-600 leading-relaxed">
+                                搭乘捷運板南線至 <span class="no-wrap font-bold text-[#8da399]">市政府站</span> 3號出口，<br>
+                                沿忠孝東路步行約 5 分鐘即可抵達。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
+                        <div class="flex justify-between items-center py-2">
+                            <span class="font-bold">停車資訊 PARKING</span>
+                            <span class="accordion-icon">↓</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="py-4 text-sm text-gray-600 leading-relaxed">
+                                飯店設有地下停車場，賓客可享免費停車 4 小時。<br>
+                                周邊亦有 <span class="no-wrap">信義區公所地下停車場</span> 可供利用。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 回函表單 -->
+    <section id="rsvp" class="py-24 px-6">
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 shadow-sm rounded-2xl">
+            <h3 class="font-en text-3xl text-center mb-2 text-[#d4a373]">RSVP</h3>
+            <p class="text-center text-sm text-gray-400 mb-10 tracking-widest italic">出席回函</p>
+            
+            <!-- 隱藏 Iframe -->
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {showSuccess();}"></iframe>
+            
+            <form action="https://www.google.com/" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+                <div class="space-y-6">
+                    <!-- 姓名 -->
+                    <div>
+                        <label class="block text-xs font-bold mb-2">姓名 <span class="font-en text-[#8da399]">NAME</span></label>
+                        <input type="text" name="entry.123456" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none transition-colors" placeholder="" required>
+                    </div>
+
+                    <!-- 出席意願 -->
+                    <div>
+                        <label class="block text-xs font-bold mb-2">出席意願 <span class="font-en text-[#8da399]">ATTENDANCE</span></label>
+                        <select name="entry.234567" id="attendance" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none" onchange="toggleGuestOptions()">
+                            <option value="親自出席">親自出席</option>
+                            <option value="禮到心到">禮到心到</option>
+                        </select>
+                    </div>
+
+                    <!-- 人數 -->
+                    <div id="count_container">
+                        <label class="block text-xs font-bold mb-2">參加午宴人數 <span class="font-en text-[#8da399]">TOTAL GUESTS</span></label>
+                        <input type="number" id="guest_count" name="entry.345678" min="0" value="0" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none" oninput="toggleGuestDetails()">
+                    </div>
+
+                    <!-- 動態顯示區域 -->
+                    <div id="dynamic_fields" class="hidden space-y-6 pt-4 border-t border-dashed border-gray-100">
+                        <div>
+                            <label class="block text-xs font-bold mb-2">飲食需求 <span class="font-en text-[#8da399]">DIETARY REQUIREMENTS</span></label>
+                            <select name="entry.456789" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none">
+                                <option value="葷食">葷食</option>
+                                <option value="全素">全素</option>
+                                <option value="蛋奶素">蛋奶素</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-2">是否需要兒童椅 <span class="font-en text-[#8da399]">CHILD CHAIR NEEDED</span></label>
+                            <select name="entry.567890" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none">
+                                <option value="不需要">不需要</option>
+                                <option value="1位">1位</option>
+                                <option value="2位">2位</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 btn-primary rounded-lg font-bold tracking-widest mt-8">
+                        送出回函 SEND RSVP
+                    </button>
+                </div>
+            </form>
+
+            <div id="success_msg" class="hidden mt-6 text-center p-4 bg-green-50 text-green-700 rounded-lg">
+                感謝您的回覆！我們婚禮見。
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-gray-400 text-xs tracking-widest">
+        &copy; 2026 CORGI & JULIE WEDDING. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        var submitted = false;
+
+        // 倒數計時邏輯
+        const weddingDate = new Date("Oct 3, 2026 12:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("about").innerHTML = "Wedding Day is Today!";
+            }
+        }, 1000);
+
+        // 摺疊面板切換
+        function toggleAccordion(element) {
+            element.classList.toggle('accordion-active');
+        }
+
+        // 表單邏輯
+        function toggleGuestOptions() {
+            const attendance = document.getElementById('attendance').value;
+            const countContainer = document.getElementById('count_container');
+            const dynamicFields = document.getElementById('dynamic_fields');
+            
+            if (attendance === '親自出席') {
+                countContainer.style.display = 'block';
+            } else {
+                countContainer.style.display = 'none';
+                dynamicFields.classList.add('hidden');
+                document.getElementById('guest_count').value = 0;
+            }
+        }
+
+        function toggleGuestDetails() {
+            const count = parseInt(document.getElementById('guest_count').value) || 0;
+            const dynamicFields = document.getElementById('dynamic_fields');
+            
+            if (count > 0) {
+                dynamicFields.classList.remove('hidden');
+            } else {
+                dynamicFields.classList.add('hidden');
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('success_msg').classList.remove('hidden');
+            document.querySelector('form').style.opacity = '0.3';
+            document.querySelector('form').style.pointerEvents = 'none';
+        }
+    </script>
+</body>
+</html>
