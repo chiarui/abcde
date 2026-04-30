@@ -113,9 +113,26 @@
             margin-bottom: 1.5rem;
             font-weight: bold;
         }
+
+        /* 音樂旋轉動畫 */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .music-playing {
+            animation: rotate 4s linear infinite;
+        }
     </style>
 </head>
 <body>
+
+    <!-- 音樂控制元件 -->
+    <div id="music-control" class="fixed bottom-6 right-6 z-[100] cursor-pointer bg-white/80 backdrop-blur-md p-3 rounded-full shadow-lg border border-gray-100 flex items-center justify-center" onclick="toggleMusic()">
+        <svg id="music-icon" class="w-6 h-6 text-[#d4a373]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        <div id="youtube-player" class="hidden"></div>
+    </div>
 
     <!-- 導覽列 -->
     <nav class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
@@ -393,50 +410,83 @@
         &copy; 2026 CORGI & JULIE WEDDING. ALL RIGHTS RESERVED.
     </footer>
 
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
         var submitted = false;
+        var player;
+        var isPlaying = false;
+
+        // YouTube Player 初始化
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'lmFlqWPzl-E', // 在這裡更換您的 YouTube 影片 ID (例如: https://www.youtube.com/watch?v=XXXXXX 裡的 XXXXXX)
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'lmFlqWPzl-E' // 循環播放需要再次輸入 ID
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // 播放器準備就緒
+        }
+
+        function toggleMusic() {
+            const icon = document.getElementById('music-control');
+            if (!player) return;
+
+            if (!isPlaying) {
+                player.playVideo();
+                icon.classList.add('music-playing');
+                isPlaying = true;
+            } else {
+                player.pauseVideo();
+                icon.classList.remove('music-playing');
+                isPlaying = false;
+            }
+        }
 
         /**
          * 倒數計時核心邏輯
-         * @param {number} targetDate 目標時間戳
-         * @param {string} prefix HTML ID 前綴 (如 'kh' 或 'tp')
          */
         function updateTimer(targetDate, prefix) {
             const now = new Date().getTime();
             const distance = targetDate - now;
 
-            // 計算 天、時、分、秒
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // 確保數字不小於 0 並補零
             const displayD = Math.max(0, d).toString().padStart(2, '0');
             const displayH = Math.max(0, h).toString().padStart(2, '0');
             const displayM = Math.max(0, m).toString().padStart(2, '0');
             const displayS = Math.max(0, s).toString().padStart(2, '0');
 
-            // 更新 DOM (修正了 ID 對應問題)
             document.getElementById(`${prefix}-days`).innerText = displayD;
             document.getElementById(`${prefix}-hours`).innerText = displayH;
             document.getElementById(`${prefix}-mins`).innerText = displayM;
             document.getElementById(`${prefix}-secs`).innerText = displayS;
         }
 
-        // 設定目標日期
         const khDate = new Date("Oct 3, 2026 12:00:00").getTime();
         const tpDate = new Date("Nov 14, 2026 18:00:00").getTime();
 
-        // 啟動計時器
         function startCountdowns() {
             updateTimer(khDate, "kh");
             updateTimer(tpDate, "tp");
         }
 
-        // 每秒更新
         setInterval(startCountdowns, 1000);
-        // 初始化執行一次，避免畫面空白一秒
         startCountdowns();
 
         function toggleAccordion(element) {
