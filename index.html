@@ -482,17 +482,34 @@
             }
         }
 
-        // 偵測所有可能的使用者互動來啟動音訊
-        const interactionEvents = ['mousedown', 'keydown', 'touchstart', 'wheel', 'click'];
-        interactionEvents.forEach(eventType => {
+        // 偵測點擊、按鍵、觸控（通常用於手機或電腦點擊）
+        const primaryInteractionEvents = ['mousedown', 'keydown', 'touchstart'];
+        primaryInteractionEvents.forEach(eventType => {
             window.addEventListener(eventType, handleUserInteraction, { once: true, passive: true });
         });
+
+        // 獨立偵測滾輪事件，如果是第一次捲動且未啟動，則模擬啟動
+        window.addEventListener('wheel', (e) => {
+            if (!interactionDone) {
+                handleUserInteraction(e);
+            }
+        }, { passive: true });
+
+        // 獨立偵測 Scroll 事件（應對行動端或不同的捲動行為）
+        window.addEventListener('scroll', (e) => {
+            if (!interactionDone) {
+                handleUserInteraction(e);
+            }
+        }, { passive: true });
 
         function handleUserInteraction(e) {
             // 如果是點擊了靜音按鈕本身，由 toggleMuteManual 處理，不執行此處全域啟動邏輯
             if (e && e.target && e.target.closest('#mute-toggle')) return;
 
-            if (!interactionDone && player && typeof player.unMute === 'function') {
+            // 如果已經啟動過，則不再執行
+            if (interactionDone) return;
+
+            if (player && typeof player.unMute === 'function') {
                 activateAudio();
             }
         }
