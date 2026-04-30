@@ -45,12 +45,12 @@
             color: white;
         }
 
-        /* 倒數計時卡片 */
+        /* 倒數計時卡片 - 加大版 */
         .timer-card {
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.25rem 0.75rem;
             min-width: 80px;
             position: relative;
         }
@@ -59,7 +59,7 @@
             width: 1px;
             height: 40px;
             background: #d1d1d1;
-            margin: 0 15px;
+            margin: 0 12px;
         }
 
         /* 垂直 V-Card */
@@ -105,6 +105,14 @@
             opacity: 0.9;
             transform: translateY(-2px);
         }
+
+        .countdown-title {
+            font-size: 0.875rem;
+            letter-spacing: 0.3em;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -112,109 +120,195 @@
     <!-- 導覽列 -->
     <nav class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
         <div class="font-en text-2xl font-medium tracking-widest text-[#d4a373]">C & J</div>
-        <div class="hidden md:flex space-x-8 text-sm tracking-widest">
+        <div class="hidden lg:flex space-x-8 text-sm tracking-widest">
             <a href="#about" class="hover:text-[#d4a373]">關於我們 ABOUT</a>
             <a href="#details" class="hover:text-[#d4a373]">婚禮詳情 DETAILS</a>
             <a href="#rsvp" class="hover:text-[#d4a373]">出席回函 RSVP</a>
         </div>
-        <div class="md:hidden text-xs text-[#d4a373] font-bold">2026.10.03</div>
+        <div class="lg:hidden text-[10px] text-[#d4a373] font-bold">10.03 KHH / 11.14 TPE</div>
     </nav>
 
     <!-- 封面 -->
     <header class="hero-section">
-        <div class="animate-fadeIn">
+        <div class="animate-fadeIn bg-black/10 p-8 rounded-lg backdrop-blur-[2px]">
             <h2 class="font-en italic text-2xl mb-4 tracking-[0.2em]">Love Love Love</h2>
-            <h1 class="font-en text-6xl md:text-8xl mb-6">Corgi & Julie</h1>
-            <p class="text-lg tracking-[0.3em]">2026 . 10 . 03</p>
+            <h1 class="font-en text-6xl md:text-8xl mb-8">Corgi & Julie</h1>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 text-sm tracking-[0.2em]">
+                <div class="border-b md:border-b-0 md:border-r border-white/50 pb-2 md:pb-0 md:pr-6">
+                    <p class="font-bold">2026 . 10 . 03</p>
+                    <p class="text-[10px] mt-1 opacity-80">KAOHSIUNG</p>
+                </div>
+                <div>
+                    <p class="font-bold">2026 . 11 . 14</p>
+                    <p class="text-[10px] mt-1 opacity-80">TAIPEI</p>
+                </div>
+            </div>
         </div>
     </header>
 
     <!-- 關於我們 / 計時器 -->
-    <section id="about" class="py-24 px-6 max-w-4xl mx-auto text-center">
-        <h3 class="font-en text-4xl mb-12 text-[#8da399]">Counting Down</h3>
+    <section id="about" class="py-24 px-6 max-w-7xl mx-auto text-center">
+        <h3 class="font-en text-4xl mb-16 text-[#8da399]">Save the Date</h3>
         
-        <div class="flex flex-wrap justify-center items-center gap-4 mb-20">
-            <div class="timer-card">
-                <span id="days" class="block font-en text-4xl text-[#d4a373]">00</span>
-                <span class="text-[10px] text-gray-400 tracking-tighter">DAYS</span>
+        <div class="grid lg:grid-cols-2 gap-12 mb-20">
+            <!-- 高雄計時 -->
+            <div class="bg-white/50 p-10 rounded-[2rem] border border-gray-100 shadow-sm">
+                <p class="countdown-title">高雄場 KAOHSIUNG COUNTDOWN</p>
+                <div class="flex justify-center items-center gap-2">
+                    <div class="timer-card">
+                        <span id="kh-days" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">DAYS</span>
+                    </div>
+                    <div class="timer-divider"></div>
+                    <div class="timer-card">
+                        <span id="kh-hours" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">HRS</span>
+                    </div>
+                    <div class="timer-divider"></div>
+                    <div class="timer-card">
+                        <span id="kh-mins" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">MINS</span>
+                    </div>
+                    <div class="timer-divider"></div>
+                    <div class="timer-card">
+                        <span id="kh-secs" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">SECS</span>
+                    </div>
+                </div>
             </div>
-            <div class="timer-divider hidden sm:block"></div>
-            <div class="timer-card">
-                <span id="hours" class="block font-en text-4xl text-[#d4a373]">00</span>
-                <span class="text-[10px] text-gray-400 tracking-tighter">HOURS</span>
-            </div>
-            <div class="timer-divider hidden sm:block"></div>
-            <div class="timer-card">
-                <span id="minutes" class="block font-en text-4xl text-[#d4a373]">00</span>
-                <span class="text-[10px] text-gray-400 tracking-tighter">MINS</span>
-            </div>
-            <div class="timer-divider hidden sm:block"></div>
-            <div class="timer-card">
-                <span id="seconds" class="block font-en text-4xl text-[#d4a373]">00</span>
-                <span class="text-[10px] text-gray-400 tracking-tighter">SECS</span>
+
+            <!-- 台北計時 -->
+            <div class="bg-white/50 p-10 rounded-[2rem] border border-gray-100 shadow-sm">
+                <p class="countdown-title">台北場 TAIPEI COUNTDOWN</p>
+                <div class="flex justify-center items-center gap-2">
+                    <div class="timer-card">
+                        <span id="tp-days" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">DAYS</span>
+                    </div>
+                    <div class="timer-divider"></div>
+                    <div class="timer-card">
+                        <span id="tp-hours" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">HRS</span>
+                    </div>
+                    <div class="timer-divider"></div>
+                    <div class="timer-card">
+                        <span id="tp-mins" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">MINS</span>
+                    </div>
+                    <div class="timer-divider"></div>
+                    <div class="timer-card">
+                        <span id="tp-secs" class="block font-en text-4xl text-[#d4a373]">00</span>
+                        <span class="text-[10px] text-gray-400 tracking-widest mt-1 inline-block">SECS</span>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="v-card text-left max-w-lg mx-auto">
-            <h4 class="text-xl mb-4 font-bold">我們的故事 OUR STORY</h4>
+            <h4 class="text-xl mb-4 font-bold text-[#d4a373]">我們的故事 OUR STORY</h4>
             <p class="leading-loose text-gray-600">
                 在溫暖的陽光下，我們決定攜手前行。<br>
-                在這個特別的日子，誠摯邀請您參與我們的幸福時刻。
+                在高雄，在台北，我們想將這份喜悅分享給最珍貴的你們。<br>
+                誠摯邀請您參與我們的幸福時刻。
             </p>
         </div>
     </section>
 
     <!-- 婚禮詳情 -->
     <section id="details" class="py-24 bg-[#f4f1ea] px-6">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-5xl mx-auto">
             <h3 class="font-en text-4xl text-center mb-16 text-[#8da399]">Wedding Details</h3>
             
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <div>
-                        <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHEN</p>
-                        <p class="text-lg">2026 年 10 月 03 日</p>
-                        <p class="text-sm text-gray-500">11:30 迎賓入席 | 12:00 正式開席</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHERE</p>
-                        <p class="text-lg">台北艾美酒店 翡翠廳</p>
-                        <p class="text-sm text-gray-500 no-wrap">台北市信義區松仁路38號</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">DRESS CODE</p>
-                        <p class="text-lg">淡色系色彩</p>
-                        <p class="text-sm text-gray-500">輕盈優雅的淺色調，與我們一同共享暖陽</p>
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- 高雄場詳情 -->
+                <div class="space-y-10">
+                    <div class="inline-block px-4 py-1 border border-[#d4a373] text-[#d4a373] text-xs mb-4">KAOHSIUNG WEDDING</div>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHEN</p>
+                            <p class="text-lg">2026 年 10 月 03 日 (六)</p>
+                            <p class="text-sm text-gray-500">11:30 迎賓入席 | 12:00 正式開席</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHERE</p>
+                            <p class="text-lg">晶綺盛宴 台鋁館</p>
+                            <p class="text-sm text-gray-500 no-wrap">高雄市前鎮區忠勤路8號</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">TRANSPORTATION</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
+                                    <div class="flex justify-between items-center py-2">
+                                        <span class="text-sm font-bold">捷運/輕軌資訊 MRT/LRT</span>
+                                        <span class="accordion-icon text-xs">↓</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p class="py-4 text-xs text-gray-600 leading-relaxed">
+                                            搭乘捷運紅線至 <span class="no-wrap font-bold text-[#8da399]">獅甲站</span> 4號出口，<br>
+                                            或搭乘輕軌至 <span class="no-wrap font-bold text-[#8da399]">軟體園區站</span>，<br>
+                                            步行約 5-10 分鐘即可抵達。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
+                                    <div class="flex justify-between items-center py-2">
+                                        <span class="text-sm font-bold">停車資訊 PARKING</span>
+                                        <span class="accordion-icon text-xs">↓</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p class="py-4 text-xs text-gray-600 leading-relaxed">
+                                            MLD 台鋁備有收費停車場，<br>
+                                            賓客用餐可享折抵優惠。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 交通指引 摺疊面板 -->
-                <div class="space-y-4">
-                    <p class="text-xs text-[#d4a373] font-en tracking-widest mb-4">TRANSPORTATION</p>
-                    
-                    <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
-                        <div class="flex justify-between items-center py-2">
-                            <span class="font-bold">捷運資訊 MRT</span>
-                            <span class="accordion-icon">↓</span>
+                <!-- 台北場詳情 -->
+                <div class="space-y-10">
+                    <div class="inline-block px-4 py-1 border border-[#8da399] text-[#8da399] text-xs mb-4">TAIPEI DINNER</div>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHEN</p>
+                            <p class="text-lg">2026 年 11 月 14 日 (六)</p>
+                            <p class="text-sm text-gray-500">17:30 迎賓 | 18:00 正式開席</p>
                         </div>
-                        <div class="accordion-content">
-                            <p class="py-4 text-sm text-gray-600 leading-relaxed">
-                                搭乘捷運板南線至 <span class="no-wrap font-bold text-[#8da399]">市政府站</span> 3號出口，<br>
-                                沿忠孝東路步行約 5 分鐘即可抵達。
-                            </p>
+                        <div>
+                            <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">WHERE</p>
+                            <p class="text-lg">GUMGUM EGG 剛剛小巨蛋店</p>
+                            <p class="text-sm text-gray-500 no-wrap">臺北市松山區南京東路四段2號1樓</p>
                         </div>
-                    </div>
-
-                    <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
-                        <div class="flex justify-between items-center py-2">
-                            <span class="font-bold">停車資訊 PARKING</span>
-                            <span class="accordion-icon">↓</span>
-                        </div>
-                        <div class="accordion-content">
-                            <p class="py-4 text-sm text-gray-600 leading-relaxed">
-                                飯店設有地下停車場，賓客可享免費停車 4 小時。<br>
-                                周邊亦有 <span class="no-wrap">信義區公所地下停車場</span> 可供利用。
-                            </p>
+                        <div>
+                            <p class="text-xs text-[#d4a373] font-en tracking-widest mb-1">TRANSPORTATION</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
+                                    <div class="flex justify-between items-center py-2">
+                                        <span class="text-sm font-bold">捷運資訊 MRT</span>
+                                        <span class="accordion-icon text-xs">↓</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p class="py-4 text-xs text-gray-600 leading-relaxed">
+                                            搭乘捷運松山新店線至 <span class="no-wrap font-bold text-[#8da399]">台北小巨蛋站</span> 2號出口，<br>
+                                            步行約 1 分鐘即可抵達。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="border-b border-gray-300 pb-2 accordion-item cursor-pointer" onclick="toggleAccordion(this)">
+                                    <div class="flex justify-between items-center py-2">
+                                        <span class="text-sm font-bold">停車資訊 PARKING</span>
+                                        <span class="accordion-icon text-xs">↓</span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <p class="py-4 text-xs text-gray-600 leading-relaxed">
+                                            建議停放於 <span class="no-wrap">台北小巨蛋地下停車場</span><br>
+                                            或周邊收費停車場。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,11 +318,10 @@
 
     <!-- 回函表單 -->
     <section id="rsvp" class="py-24 px-6">
-        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 shadow-sm rounded-2xl">
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 shadow-sm rounded-2xl border border-gray-50">
             <h3 class="font-en text-3xl text-center mb-2 text-[#d4a373]">RSVP</h3>
             <p class="text-center text-sm text-gray-400 mb-10 tracking-widest italic">出席回函</p>
             
-            <!-- 隱藏 Iframe -->
             <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {showSuccess();}"></iframe>
             
             <form action="https://www.google.com/" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
@@ -237,6 +330,16 @@
                     <div>
                         <label class="block text-xs font-bold mb-2">姓名 <span class="font-en text-[#8da399]">NAME</span></label>
                         <input type="text" name="entry.123456" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none transition-colors" placeholder="" required>
+                    </div>
+
+                    <!-- 參加場次 -->
+                    <div>
+                        <label class="block text-xs font-bold mb-2">參加場次 <span class="font-en text-[#8da399]">WHICH WEDDING</span></label>
+                        <select name="entry.999999" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none">
+                            <option value="高雄場 (10/03)">高雄場 (10/03)</option>
+                            <option value="台北場 (11/14)">台北場 (11/14)</option>
+                            <option value="兩場皆參加">兩場皆參加</option>
+                        </select>
                     </div>
 
                     <!-- 出席意願 -->
@@ -250,14 +353,14 @@
 
                     <!-- 人數 -->
                     <div id="count_container">
-                        <label class="block text-xs font-bold mb-2">參加午宴人數 <span class="font-en text-[#8da399]">TOTAL GUESTS</span></label>
+                        <label class="block text-xs font-bold mb-2">參加人數 <span class="font-en text-[#8da399]">TOTAL GUESTS</span></label>
                         <input type="number" id="guest_count" name="entry.345678" min="0" value="0" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none" oninput="toggleGuestDetails()">
                     </div>
 
                     <!-- 動態顯示區域 -->
                     <div id="dynamic_fields" class="hidden space-y-6 pt-4 border-t border-dashed border-gray-100">
                         <div>
-                            <label class="block text-xs font-bold mb-2">飲食需求 <span class="font-en text-[#8da399]">DIETARY REQUIREMENTS</span></label>
+                            <label class="block text-xs font-bold mb-2">飲食需求 <span class="font-en text-[#8da399]">DIETARY</span></label>
                             <select name="entry.456789" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none">
                                 <option value="葷食">葷食</option>
                                 <option value="全素">全素</option>
@@ -265,7 +368,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-2">是否需要兒童椅 <span class="font-en text-[#8da399]">CHILD CHAIR NEEDED</span></label>
+                            <label class="block text-xs font-bold mb-2">是否需要兒童椅 <span class="font-en text-[#8da399]">CHILD CHAIR</span></label>
                             <select name="entry.567890" class="w-full border-b border-gray-200 py-2 focus:border-[#d4a373] outline-none">
                                 <option value="不需要">不需要</option>
                                 <option value="1位">1位</option>
@@ -293,35 +396,53 @@
     <script>
         var submitted = false;
 
-        // 倒數計時邏輯
-        const weddingDate = new Date("Oct 3, 2026 12:00:00").getTime();
-
-        const timer = setInterval(function() {
+        /**
+         * 倒數計時核心邏輯
+         * @param {number} targetDate 目標時間戳
+         * @param {string} prefix HTML ID 前綴 (如 'kh' 或 'tp')
+         */
+        function updateTimer(targetDate, prefix) {
             const now = new Date().getTime();
-            const distance = weddingDate - now;
+            const distance = targetDate - now;
 
+            // 計算 天、時、分、秒
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = d.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+            // 確保數字不小於 0 並補零
+            const displayD = Math.max(0, d).toString().padStart(2, '0');
+            const displayH = Math.max(0, h).toString().padStart(2, '0');
+            const displayM = Math.max(0, m).toString().padStart(2, '0');
+            const displayS = Math.max(0, s).toString().padStart(2, '0');
 
-            if (distance < 0) {
-                clearInterval(timer);
-                document.getElementById("about").innerHTML = "Wedding Day is Today!";
-            }
-        }, 1000);
+            // 更新 DOM (修正了 ID 對應問題)
+            document.getElementById(`${prefix}-days`).innerText = displayD;
+            document.getElementById(`${prefix}-hours`).innerText = displayH;
+            document.getElementById(`${prefix}-mins`).innerText = displayM;
+            document.getElementById(`${prefix}-secs`).innerText = displayS;
+        }
 
-        // 摺疊面板切換
+        // 設定目標日期
+        const khDate = new Date("Oct 3, 2026 12:00:00").getTime();
+        const tpDate = new Date("Nov 14, 2026 18:00:00").getTime();
+
+        // 啟動計時器
+        function startCountdowns() {
+            updateTimer(khDate, "kh");
+            updateTimer(tpDate, "tp");
+        }
+
+        // 每秒更新
+        setInterval(startCountdowns, 1000);
+        // 初始化執行一次，避免畫面空白一秒
+        startCountdowns();
+
         function toggleAccordion(element) {
             element.classList.toggle('accordion-active');
         }
 
-        // 表單邏輯
         function toggleGuestOptions() {
             const attendance = document.getElementById('attendance').value;
             const countContainer = document.getElementById('count_container');
