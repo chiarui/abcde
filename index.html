@@ -538,14 +538,20 @@
             const mutedIcon = document.getElementById('icon-volume-muted');
             const toggleBtn = document.getElementById('mute-toggle');
 
-            if (isMuted) {
+            if (interactionDone) {
+                if (isMuted) {
+                    highIcon.classList.add('hidden');
+                    mutedIcon.classList.remove('hidden');
+                    toggleBtn.classList.remove('playing');
+                } else {
+                    highIcon.classList.remove('hidden');
+                    mutedIcon.classList.add('hidden');
+                    toggleBtn.classList.add('playing');
+                }
+            } else {
                 highIcon.classList.add('hidden');
                 mutedIcon.classList.remove('hidden');
                 toggleBtn.classList.remove('playing');
-            } else {
-                highIcon.classList.remove('hidden');
-                mutedIcon.classList.add('hidden');
-                toggleBtn.classList.add('playing');
             }
         }
 
